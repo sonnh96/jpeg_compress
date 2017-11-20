@@ -1,0 +1,23 @@
+.content{
+	width: 70%;
+}
+.input, .output{
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	margin-left: 15%;
+	border: solid 1px #f0f0f0;
+	box-shadow: 4px 6px 0 #929294;
+}
+img{
+	width: 100%;
+}
+button{
+	margin: auto;
+}
+#image{
+	display: none;
+}
+#size{
+	display: none;
+}
