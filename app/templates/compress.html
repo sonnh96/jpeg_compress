@@ -11,50 +11,158 @@
     <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.Jcrop.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/custom.js') }}"></script>
 
-</head> 
+</head>
 <body>
-<a href="{{url_for('index')}}"><div class="title"><h1>Helloworld</h1></div></a>
+<div class="title"><h1>Picture Compress</h1></div>
+<div class="navi">
+    <a href="{{url_for('index')}}">
+        <div class="title"><h1>Homepage</h1></div>
+    </a>
+</div>
 <div class="content">
-    <ul>
-        <li><button class="btn_cpr">Compress</button></li>
-        <li><button class="btn_crop">Crop</button></li>
-        <li><button class="btn_rot">Rotate</button></li>
-    </ul>
-    <img class="origin" id="target" src="{{ url_for('static',filename= 'images/origin/' + image) }}">
-    <span>{{ size }}</span>
-    {% if formCpr %}
-    <form class="crop" action="/compress/{{image}}" method="post">
-        {{formCpr.hidden_tag()}}
-        <p> Enter the quality : {{formCpr.quality(size=1, value=50)}}</p>
-        <div class="slider"></div>
-        <p><input type="submit" value="Compress"></p>
-    </form>
-    {% endif %}
-    {% if formRot %}
-    <form class="crop" action="/rotate/{{image}}" method="post">
-        {{formRot.hidden_tag()}}
-        <p>{{formRot.vertically}} Vertically</p>
-        <p> {{formRot.horizontally}} Horizontally</p>
-        <p>Degrees: {{formRot.rotate}}</p>
-        <p><input type="submit" value="Rotate"></p>
-    </form>
-    {% endif %}
-    {% if formCrop %}
-    <form class="crop" action="/crop/{{image}}" method="post">
-        {{formCrop.hidden_tag()}}
-        <p>{{formCrop.x1}}</p>
-        <p>{{formCrop.y1}}</p>
-        <p>{{formCrop.x2}}</p>
-        <p>{{formCrop.y2}}</p>
-        <p>{{formCrop.height}}</p>
-        <p>{{formCrop.width}}</p>
-        <p><input type="submit" value="Crop"></p>
-    </form>
-    {% endif %}
-    {% if posts %}
-    <img src="{{ url_for('static',filename= 'images/compress/' + posts[0]) }}">
-    <span>{{ posts[1] }}</span>
-    {% endif %}
+    <div class="option">
+        <ul>
+            <li>
+                <button class="btn_default btn_cpr">Compress</button>
+            </li>
+            <li>
+                <button class="btn_default btn_crop">Crop</button>
+            </li>
+            <li>
+                <button class="btn_default btn_rot">Rotate</button>
+            </li>
+            <li>
+                <button class="btn_default btn_resize">Resize</button>
+            </li>
+            <li>
+                <button class="btn_default btn_effect">Effect</button>
+            </li>
+        </ul>
+    </div>
+    <div class="col12">
+        <div class="col6">
+            <img class="origin" id="target" src="{{ url_for('static',filename= 'images/' + image) }}"
+                 style="width: 100%">
+            <span>File size: {{ size }}</span>
+
+            {% if formCpr %}
+            <form class="crop" action="/compress/{{image}}" method="post">
+                {{formCpr.hidden_tag()}}
+                <p> Enter the quality : {{formCpr.quality(size=1, value=50)}}</p>
+                <div class="slider"></div>
+                <p><input type="submit" value="Compress"></p>
+            </form>
+            {% endif %}
+
+            {% if formRot %}
+            <form class="rotate" action="/rotate/{{image}}" method="post">
+                {{formRot.hidden_tag()}}
+                <p>{{formRot.vertically}} Vertically</p>
+                <p> {{formRot.horizontally}} Horizontally</p>
+                <p>Degrees: {{formRot.rotate}}</p>
+                <p><input type="submit" value="Rotate"></p>
+            </form>
+            {% endif %}
+
+            {% if formResize %}
+            <form class="resize" action="/resize/{{image}}" method="post">
+                {{formResize.hidden_tag()}}
+                <p>Height: {{formResize.height}}</p>
+                <p>Width: {{formResize.width}}</p>
+                <p><input type="submit" value="Resize"></p>
+            </form>
+            <script>
+                $( "#target" ).resizable({
+                    stop: function( event, ui ) {
+                    height = $("#target").height();
+                    width = $("#target").width();
+                    $("#height").val(height);
+                    $("#width").val(width);
+                    }
+                });
+            </script>
+            {% endif %}
+
+            {% if formCrop %}
+            <form class="crop" action="/crop/{{image}}" method="post">
+                {{formCrop.hidden_tag()}}
+                <p>{{formCrop.x1}}</p>
+                <p>{{formCrop.y1}}</p>
+                <p>{{formCrop.x2}}</p>
+                <p>{{formCrop.y2}}</p>
+                <p>{{formCrop.height}}</p>
+                <p>{{formCrop.width}}</p>
+                <p><input type="submit" value="Crop"></p>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        var jcrop_api;
+                        $('#width').val($("#target").height());
+                        $('#height').val($("#target").width());
+
+                        $('#target').Jcrop({
+                          onChange:   showCoords,
+                          onSelect:   showCoords,
+                          onRelease:  showCoords
+                        },function(){
+                          jcrop_api = this;
+                        });
+
+                        $('#coords').on('change','input',function(e){
+                          var x1 = $('#x1').val(),
+                              x2 = $('#x2').val(),
+                              y1 = $('#y1').val(),
+                              y2 = $('#y2').val();
+                          jcrop_api.setSelect([x1,y1,x2,y2]);
+                        });
+                        function showCoords(c)
+                      {
+                        $('#x1').val(c.x);
+                        $('#y1').val(c.y);
+                        $('#x2').val(c.x2);
+                        $('#y2').val(c.y2);
+
+                      };
+                    });
+                </script>
+            </form>
+            {% endif %}
+
+            {% if formEffect %}
+            <form class="effect" action="/effect/{{image}}" method="post">
+                {{formEffect.hidden_tag()}}
+
+                <div>
+                {{formEffect.sepia}} Sepia
+                <br>
+                {{formEffect.greyscale}} Greyscale
+                <br>
+                {{formEffect.vignette}} Vignette
+                </div>
+
+                <div class="brightness"></div>
+                <p>Brightness {{formEffect.brightness(size=1, value=0)}}</p>
+                <div class="contrast"></div>
+                <p>Contrast {{formEffect.contrast(size=1, value=0)}}</p>
+
+                <p><input type="submit" value="Effect"></p>
+            </form>
+            <script>
+                $(document).ready(function(){
+                    $('input[type="checkbox"]').on('change', function() {
+                       $(this).siblings('input[type="checkbox"]').prop('checked', false);
+                    });
+                });
+            </script>
+            {% endif %}
+
+        </div>
+        <div class="col6">
+            {% if posts %}
+            <img src="{{ url_for('static',filename= 'images/' + posts[0]) }}" style="width: 100%">
+            <span>File size: {{ posts[1] }}</span>
+            {% endif %}
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -70,6 +178,14 @@
 
         $(".btn_rot").click(function(){
             var url = '{{ url_for('rotate', image=image)}}';
+            window.location.href = url;
+        });
+        $(".btn_resize").click(function(){
+            var url = '{{ url_for('resize', image=image)}}';
+            window.location.href = url;
+        });
+        $(".btn_effect").click(function(){
+            var url = '{{ url_for('effect', image=image)}}';
             window.location.href = url;
         });
     })

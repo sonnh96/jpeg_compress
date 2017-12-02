@@ -1,23 +1,39 @@
-.content{
-	width: 70%;
+body{
+	padding: 3% 10%;
+	background-color: grey;
+	color: white;
 }
-.input, .output{
-	width: 100%;
-	text-align: center;
-	padding: 10px;
-	margin-left: 15%;
-	border: solid 1px #f0f0f0;
-	box-shadow: 4px 6px 0 #929294;
-}
-img{
+.title{
 	width: 100%;
 }
-button{
-	margin: auto;
+.description_text{
+	padding: 15px 0;
 }
-#image{
-	display: none;
+.navi{
+	font-size: 15px;
 }
-#size{
-	display: none;
+.navi a{
+	text-decoration: none;
+	color: white;
+}
+.option ul{
+	list-style-type: none;
+}
+.option ul li{
+	display: inline-block;
+}
+.option ul li .btn_default{
+	padding: 5px 15px;
+	border-radius: 7px;
+}
+.col12{
+	width: 100%;
+}
+.col6{
+	width: 48%;
+	float: left;
+	padding: 0 1%;
+}
+.crop #height, .crop #width{
+    display: none;
 }

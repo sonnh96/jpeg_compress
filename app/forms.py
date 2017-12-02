@@ -19,3 +19,14 @@ class FormRotate(Form):
 	vertically = BooleanField()
 	horizontally = BooleanField()
 	rotate = StringField('Rotate')
+
+class FormResize(Form):
+	height = StringField('height')
+	width = StringField('width')
+
+class FormEffect(Form):
+	sepia = BooleanField()
+	greyscale = BooleanField()
+	vignette = BooleanField()
+	brightness = StringField('brightness')
+	contrast = StringField('contrast')

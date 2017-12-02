@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home page</title>
+    <title>Picture Compress</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-<div class="title"><h1>Helloworld</h1></div>
+<div class="title"><h1>Picture Compress</h1></div>
+<div class="description_text">Upload your picture here to compress, crop or rotate.</div>
 <form action="http://localhost:5000/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="file"/>
     <input type="submit"/>
