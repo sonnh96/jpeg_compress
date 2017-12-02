@@ -28,5 +28,6 @@ class FormEffect(Form):
 	sepia = BooleanField()
 	greyscale = BooleanField()
 	vignette = BooleanField()
+	linedraw = BooleanField()
 	brightness = StringField('brightness')
 	contrast = StringField('contrast')

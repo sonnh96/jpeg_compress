@@ -76,7 +76,8 @@ def effect(image):
 		sepia = formEffect.sepia.data
 		greyscale = formEffect.greyscale.data
 		vignette = formEffect.vignette.data
+		linedraw = formEffect.linedraw.data
 		brightness = formEffect.brightness.data
 		contrast = formEffect.contrast.data
-		posts = imgEffect(image, sepia, greyscale, vignette, brightness, contrast)
+		posts = imgEffect(image, sepia, greyscale, vignette, linedraw, brightness, contrast)
 	return render_template('compress.html', formEffect=formEffect, image=image, size=size, posts=posts)

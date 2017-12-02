@@ -107,7 +107,7 @@ def imgResize(image, height, width):
     return tree
 
 
-def imgEffect(image, s, g, v, b, c):
+def imgEffect(image, s, g, v, l, b, c):
     def sepia(image):
         sepia = np.zeros(image.shape)
         r, g, b = image[:, :, 0], image[:, :, 1], image[:, :, 2]
@@ -153,19 +153,28 @@ def imgEffect(image, s, g, v, b, c):
 
     def vignettet(image):
         rows, cols = image.shape[:2]
-
-        # generating vignette mask using Gaussian kernels
         kernel_x = cv2.getGaussianKernel(cols, cols / 3)
         kernel_y = cv2.getGaussianKernel(rows, rows / 3)
         kernel = kernel_y * kernel_x.T
         mask = 255 * kernel / np.linalg.norm(kernel)
         output = np.copy(img)
-
-        # applying the mask to each channel in the input image
         for i in range(3):
             output[:, :, i] = output[:, :, i] * mask
-
         return output
+
+    def linedraw(image):
+        def cvt(x):
+            if x == 0:
+                return 255
+            elif x == 255:
+                return 0
+
+        edges = cv2.Canny(image, 50, 100)
+        height, width = edges.shape
+        for x in range(height):
+            for y in range(width):
+                edges[x, y] = cvt(edges[x, y])
+        return edges
 
     b = int(b)
     c = int(c)
@@ -181,9 +190,10 @@ def imgEffect(image, s, g, v, b, c):
         img1 = greyscale(img)
     elif v:
         img1 = vignettet(img)
+    elif l:
+        img1 = linedraw(img)
     else:
         img1 = np.copy(img)
-
     if b != 0:
         img1 = brightness(img1, b)
 
@@ -196,4 +206,5 @@ def imgEffect(image, s, g, v, b, c):
     filesize = os.path.getsize(path + des)
     tree.append(des)
     tree.append(filesize)
+
     return tree

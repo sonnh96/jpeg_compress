@@ -43,10 +43,10 @@
         <div class="col6">
             <img class="origin" id="target" src="{{ url_for('static',filename= 'images/' + image) }}"
                  style="width: 100%">
-            <span>File size: {{ size }}</span>
+            <span>File size: {{ size }} bytes</span>
 
             {% if formCpr %}
-            <form class="crop" action="/compress/{{image}}" method="post">
+            <form class="compress" action="/compress/{{image}}" method="post">
                 {{formCpr.hidden_tag()}}
                 <p> Enter the quality : {{formCpr.quality(size=1, value=50)}}</p>
                 <div class="slider"></div>
@@ -137,6 +137,8 @@
                 {{formEffect.greyscale}} Greyscale
                 <br>
                 {{formEffect.vignette}} Vignette
+                <br>
+                {{formEffect.linedraw}} Line draw
                 </div>
 
                 <div class="brightness"></div>
@@ -159,7 +161,16 @@
         <div class="col6">
             {% if posts %}
             <img src="{{ url_for('static',filename= 'images/' + posts[0]) }}" style="width: 100%">
-            <span>File size: {{ posts[1] }}</span>
+            <span>File size: {{ posts[1] }} bytes</span>
+            <button class="btn_default optimize">Optimize this image</button>
+            <script>
+                $(document).ready(function(){
+                    $(".optimize").click(function(){
+                        var url = '{{ url_for('compress', image=posts[0])}}';
+                        window.location.href = url;
+                    });
+                })
+            </script>
             {% endif %}
         </div>
     </div>
