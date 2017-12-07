@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-<div class="title"><h1>Picture Compress</h1></div>
+<div class="title"><h1>JPEG Compress</h1></div>
 <div class="description_text">Upload your picture here to compress, crop or rotate.</div>
 <form action="http://localhost:5000/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file"/>
+    <input type="file" multiple accept='image/*' name="file"/>
     <input type="submit"/>
 </form>
 </body>
