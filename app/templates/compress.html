@@ -48,9 +48,9 @@
             {% if formCpr %}
             <form class="compress" action="/compress/{{image}}" method="post">
                 {{formCpr.hidden_tag()}}
-                <p> Enter the quality : {{formCpr.quality(size=1, value=50)}}</p>
+                <p> Enter the quality : {{formCpr.quality(size=2, value=50)}}</p>
                 <div class="slider"></div>
-                <p><input type="submit" value="Compress"></p>
+                <p><input class="submit" type="submit" value="Compress"></p>
             </form>
             {% endif %}
 
@@ -60,7 +60,7 @@
                 <p>{{formRot.vertically}} Vertically</p>
                 <p> {{formRot.horizontally}} Horizontally</p>
                 <p>Degrees: {{formRot.rotate}}</p>
-                <p><input type="submit" value="Rotate"></p>
+                <p><input class="submit" type="submit" value="Rotate"></p>
             </form>
             {% endif %}
 
@@ -69,7 +69,7 @@
                 {{formResize.hidden_tag()}}
                 <p>Height: {{formResize.height}}</p>
                 <p>Width: {{formResize.width}}</p>
-                <p><input type="submit" value="Resize"></p>
+                <p><input class="submit" type="submit" value="Resize"></p>
             </form>
             <script>
                 $( "#target" ).resizable({
@@ -86,13 +86,13 @@
             {% if formCrop %}
             <form class="crop" action="/crop/{{image}}" method="post">
                 {{formCrop.hidden_tag()}}
-                <p>{{formCrop.x1}}</p>
-                <p>{{formCrop.y1}}</p>
-                <p>{{formCrop.x2}}</p>
-                <p>{{formCrop.y2}}</p>
+                <p>X1: {{formCrop.x1}}</p>
+                <p>Y1: {{formCrop.y1}}</p>
+                <p>X2: {{formCrop.x2}}</p>
+                <p>Y2: {{formCrop.y2}}</p>
                 <p>{{formCrop.height}}</p>
                 <p>{{formCrop.width}}</p>
-                <p><input type="submit" value="Crop"></p>
+                <p><input class="submit" type="submit" value="Crop"></p>
                 <script type="text/javascript">
                     $(document).ready(function(){
                         var jcrop_api;
@@ -141,12 +141,15 @@
                 {{formEffect.linedraw}} Line draw
                 </div>
 
-                <div class="brightness"></div>
-                <p>Brightness {{formEffect.brightness(size=1, value=0)}}</p>
-                <div class="contrast"></div>
-                <p>Contrast {{formEffect.contrast(size=1, value=0)}}</p>
-
-                <p><input type="submit" value="Effect"></p>
+                <div>
+                    <p>Brightness {{formEffect.brightness(size=2, value=0)}}</p>
+                    <div class="brightness"></div>
+                </div>
+                <div>
+                    <p>Contrast {{formEffect.contrast(size=2, value=0)}}</p>
+                    <div class="contrast"></div>
+                </div>
+                <p><input class="submit" type="submit" value="Submit"></p>
             </form>
             <script>
                 $(document).ready(function(){
@@ -160,8 +163,10 @@
         </div>
         <div class="col6">
             {% if posts %}
-            <img src="{{ url_for('static',filename= 'images/' + posts[0]) }}" style="width: 100%">
-            <span>File size: {{ posts[1] }} bytes</span>
+            <div class="img">
+                <img src="{{ url_for('static',filename= 'images/' + posts[0]) }}" style="width: 100%">
+            </div>
+            <span style="display: block;">File size: {{ posts[1] }} bytes</span>
             <button class="btn_default optimize">Optimize this image</button>
             <script>
                 $(document).ready(function(){

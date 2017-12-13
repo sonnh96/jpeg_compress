@@ -169,7 +169,7 @@ def imgEffect(image, s, g, v, l, b, c):
             elif x == 255:
                 return 0
 
-        edges = cv2.Canny(image, 50, 100)
+        edges = cv2.Canny(image, 100, 200)
         height, width = edges.shape
         for x in range(height):
             for y in range(width):
@@ -194,10 +194,9 @@ def imgEffect(image, s, g, v, l, b, c):
         img1 = linedraw(img)
     else:
         img1 = np.copy(img)
-    if b != 0:
+    if b != 0 and s is False and g is False and l is False:
         img1 = brightness(img1, b)
-
-    if c != 0:
+    if c != 0 and s is False and g is False and l is False:
         img1 = contrast(img1, c)
 
     des = str(random.randint(1000, 9999)) + image

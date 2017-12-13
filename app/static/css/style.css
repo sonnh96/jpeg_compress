@@ -22,7 +22,7 @@ body{
 .option ul li{
 	display: inline-block;
 }
-.option ul li .btn_default{
+.btn_default, .submit{
 	padding: 5px 15px;
 	border-radius: 7px;
 }
@@ -36,4 +36,10 @@ body{
 }
 .crop #height, .crop #width{
     display: none;
+}
+.optimize{
+    margin-top: 50px;
+}
+.img{
+    min-height: 300px;
 }
