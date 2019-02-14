@@ -3,3 +3,4 @@ numpy
 scipy
 pprint 
 opencv-python
+flask_wtf
