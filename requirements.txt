@@ -2,4 +2,4 @@ flask
 numpy
 scipy
 pprint 
-python-opencv
+opencv-python
